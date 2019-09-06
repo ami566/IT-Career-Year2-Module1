@@ -1,0 +1,67 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Person
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            List<Person> persons = new List<Person>();
+            Person firstPerson = new Person();
+            firstPerson.Name = "Гошо";
+            firstPerson.Age = 15;
+            firstPerson.IntroduceYourself();
+
+
+            Person secondPerson = new Person();
+            secondPerson.Name = "Selvi";
+            secondPerson.Age = 17;
+            secondPerson.IntroduceYourself();
+
+            Person thirdPerson = new Person();
+            thirdPerson.Name = "Amina";
+            thirdPerson.Age = 16;
+            thirdPerson.IntroduceYourself();
+
+            BankAccount firstBA = new BankAccount();
+            firstBA.ID = 1;
+            firstBA.Balance = 100;
+            firstPerson.Accounts.Add(firstBA);
+
+            BankAccount secondBA = new BankAccount();
+            secondBA.ID = 2;
+            secondBA.Balance = 200;
+            secondPerson.Accounts.Add(secondBA);
+
+            BankAccount thirdBA = new BankAccount();
+            thirdBA.ID = 3;
+            thirdBA.Balance = 300;
+            secondPerson.Accounts.Add(thirdBA);
+
+            BankAccount forthBA = new BankAccount();
+            forthBA.ID = 4;
+            forthBA.Balance = 400;
+            thirdPerson.Accounts.Add(forthBA);
+
+            BankAccount fifthBA = new BankAccount();
+            fifthBA.ID = 5;
+            fifthBA.Balance = 500;
+            thirdPerson.Accounts.Add(fifthBA);
+
+            BankAccount sixthBA = new BankAccount();
+            sixthBA.ID = 6;
+            sixthBA.Balance = 600;
+            thirdPerson.Accounts.Add(sixthBA);
+            persons.Add(firstPerson);
+            persons.Add(secondPerson);
+            persons.Add(thirdPerson);
+
+            //Console.WriteLine(firstPerson.GetBalance());
+            //Console.WriteLine(secondPerson.GetBalance());
+            //Console.WriteLine(thirdPerson.GetBalance());
+            persons.ForEach(element => Console.WriteLine(element.GetBalance()));
+        }
+    }
+}
