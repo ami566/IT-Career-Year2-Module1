@@ -1,0 +1,32 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+
+namespace RationalNumber
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            List<RationalNumber> rationalNumbers = new List<RationalNumber>();
+            int[] inputLine = Console.ReadLine().Split(' ').Select(int.Parse).ToArray();
+
+            int i = 0;
+            while(i < rationalNumbers.Count)
+            {
+                int numerator = inputLine[0];
+                int denumerator = inputLine[1];
+                RationalNumber rationalNumber1 = new RationalNumber();
+                rationalNumber1.Numerator = numerator;
+                rationalNumber1.Denumerator = denumerator;
+
+                rationalNumbers.Add(rationalNumber1);
+                i+= 2;
+                
+            } 
+            Console.WriteLine(string.Join(';', rationalNumbers));
+            rationalNumbers.ForEach(p => p.ToString());
+        }
+    }
+}
+// ima greshka nqkude ili pri otpechatvane ili pri dobavqneto v spisuka nqkude
