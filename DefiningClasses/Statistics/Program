@@ -1,0 +1,36 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+
+
+namespace Statistics
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int n = int.Parse(Console.ReadLine());
+            Family family = new Family();
+            for (int i = 0; i < n; i++)
+            {
+                string[] inputLine = Console.ReadLine().Split(' ').ToArray();
+                string name = inputLine[0];
+                int age = int.Parse(inputLine[1]);
+
+                Person personToAdd = new Person();
+                personToAdd.name = name;
+                personToAdd.age = age;
+
+                family.persons.Add(personToAdd);
+            }
+            
+            family.persons.Where(element => element.age>30).OrderBy(element => element.name).ToList().ForEach(element => Console.WriteLine(element.ToString()));
+
+            foreach (var p in family.persons.Where(element => element.age > 30).OrderBy(p => p.name))
+            {
+                Console.WriteLine(p.ToString());
+
+            }
+        }
+    }
+}
