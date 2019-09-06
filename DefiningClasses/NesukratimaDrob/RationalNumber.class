@@ -1,0 +1,25 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace NesukratimaDrob
+{
+    class RationalNumber
+    {
+        private int numerator;
+        private int denumerator;
+
+        public int Numerator { get => numerator; set => numerator = value; }
+        public int Denumerator { get => denumerator; set => denumerator = value; }
+
+        public override string ToString()
+        {
+            return $"{numerator}/{denumerator}";
+        }
+
+        public int BiggestDiveder(int numerator, int denumerator)
+        {
+            return 1;
+        }
+    }
+}
