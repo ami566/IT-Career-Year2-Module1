@@ -1,0 +1,34 @@
+Постройте йерархията от интерфейси и класове:
+<<ICar>>
++Model:  string
++Color:  string
++Start(): string
++Stop(): string
+
+<<IElectricCar>>
++Battery: int
+
+Seat
++ToString(): string
+Tesla
++ToString(): string
+
+
+Вашата йерархия трябва да може да се ползва със следния код:
+StartUp.cs
+
+ICar seat = new Seat("Leon", "Grey");
+ICar tesla = new Tesla("Model 3", "Red", 2);
+Console.WriteLine(seat.ToString());
+Console.WriteLine(tesla.ToString());
+
+Примери
+Input	
+
+Output
+Grey Seat Leon
+Engine start
+Breaaak!
+Red Tesla Model 3 with 2 Batteries
+Engine start
+Breaaak!
