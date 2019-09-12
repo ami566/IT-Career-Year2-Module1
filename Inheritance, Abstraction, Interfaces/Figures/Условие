@@ -1,0 +1,43 @@
+Постройте йерархията от интерфейси и класове: 
+<<inteface>>
+<<Drawable>>
++Draw()
+Circle
+-radius: Integer
+Rectangle
+-width: Integer
+-height: Integer
+
+
+
+
+Трябва да може да използвате класовете по сходен начин:
+StartUp.cs
+var radius = int.Parse(Console.ReadLine());
+IDrawable circle = new Circle(radius);
+
+var width = int.Parse(Console.ReadLine());
+var height = int.Parse(Console.ReadLine());
+IDrawable rect = new Rectangle(width, height);
+
+circle.Draw();
+rect.Draw();
+Примери
+Вход	
+3
+4
+5	
+Изход
+   
+  *******
+ **       **
+**         **
+*           *
+**         **
+ **       **
+   *******
+****
+*  *
+*  *
+*  *
+****
