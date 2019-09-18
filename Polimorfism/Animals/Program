@@ -1,0 +1,18 @@
+using System;
+
+namespace Animals
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Cat cat = new Cat();
+            Dog dog = new Dog();
+
+            Trainer animal = new Trainer(cat);
+            animal.Make();
+            animal.Entity = dog;
+            animal.Make();
+        }
+    }
+}
