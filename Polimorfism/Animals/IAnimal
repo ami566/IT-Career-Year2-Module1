@@ -1,0 +1,11 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Animals2
+{
+    interface IAnimal : IMakeNoise, IMakeTrick
+    {
+        void Perform();
+    }
+}
