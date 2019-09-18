@@ -1,0 +1,29 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Animals
+{
+    class Trainer
+    {
+        private IAnimal entity;
+        public IAnimal Entity
+        {
+            get { return this.entity; }
+            set
+            {
+                this.entity = value;
+            }
+        }
+        public Trainer(IAnimal entity)
+        {
+            this.Entity = entity;
+        }
+
+        public void Make()
+        {
+             Entity.Perform();
+        }
+        
+    }
+}
