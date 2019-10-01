@@ -1,0 +1,42 @@
+static void ReadNumber(int start, int end)
+
+{
+
+string text = Console.ReadLine();
+
+int number = int.Parse(text);
+
+if ((number < start) || (number > end))
+
+{
+
+throw new ArgumentOutOfRangeException("Out of Range");
+
+}
+
+}
+
+static void Main(string[] args)
+
+{
+int start = int.Parse(Console.ReadLine());
+int end = int.Parse(Console.ReadLine());
+int br = 0;
+
+while (br < 10)
+{
+try
+{
+ReadNumber(start, end);
+br++;
+}
+catch (ArgumentOutOfRangeException ex)
+{
+Console.WriteLine(ex.Message);
+}
+catch (FormatException ex)
+{
+Console.WriteLine(ex.Message);
+}
+}
+}
