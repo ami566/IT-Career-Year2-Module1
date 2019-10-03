@@ -1,0 +1,66 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+
+namespace RoyalGambit
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            King king = new King(Console.ReadLine());
+            List<RoyalGuard> guards = new List<RoyalGuard>();
+            var royalGuardList = Console.ReadLine().Split().ToList();
+
+            foreach (var g in royalGuardList)
+            {
+                RoyalGuard r = new RoyalGuard(g);
+                king.OnUnderAttack += r.KingIsUnderAttack;
+                guards.Add(r);
+            }
+
+            List<Footman> footmans = new List<Footman>();
+            var footmansList = Console.ReadLine().Split().ToList();
+
+            foreach (var fm in footmansList)
+            {
+                Footman f = new Footman(fm);
+                king.OnUnderAttack += f.KingIsUnderAttack;
+                footmans.Add(f);
+            }
+
+            string[] command = Console.ReadLine().Split().ToArray();
+            while (command[0] != "End")
+            {
+                switch (command[0])
+                {
+                    case "Attack":
+                        {
+                            king.KingUnderAttack(new EventArgs());
+                        } break;
+                    case "Kill":
+                        {
+                            var rg = guards.Where(g => g.Name == command[1]);
+                            if (rg.Count()==1)
+                            {
+                                king.OnUnderAttack -= rg.First().KingIsUnderAttack;
+                                guards.Remove(rg.First());
+                            }
+
+                            var f = footmans.Where(fm => fm.Name == command[1]);
+                            if (f.Count() == 1)
+                            {
+                                king.OnUnderAttack -= f.First().KingIsUnderAttack;
+                                footmans.Remove(f.First());
+                            }
+                        } break;
+                    
+                        
+                }
+                 command = Console.ReadLine().Split().ToArray();
+            }
+             
+            
+        }
+    }
+}
