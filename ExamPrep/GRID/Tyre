@@ -1,0 +1,29 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+namespace GRID
+{
+    public abstract class Tyre
+    {
+        public string Name { get; set; }
+        public double Hardness { get; set; }
+        private double degradation;
+        public double Degradation
+        {
+            get { return this.degradation; }
+            set
+            {
+                this.degradation = value;
+                if (this.degradation < 0) throw new Exception("A tyre exploded.");
+            }
+        }
+        protected Tyre(string name, double hardness)
+        {
+            Name = name;
+            Hardness = hardness;
+        }
+        //protected
+    }
+} 
