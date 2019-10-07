@@ -1,0 +1,30 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+namespace GRID
+{
+    public abstract class Driver
+    {
+        public string Name { get; set; }
+        public double TotalTime { get; set; }
+        public Car Car { get; set; }
+        public double FuelConsumptionPerKm { get; set; }
+        private double speed;
+        public double Speed
+        {
+            get { return this.speed; }
+            set
+            {
+                this.speed = (Car.Hp + Car.Tyre.Degradation) / Car.FuelAmount;
+            }
+        }
+        protected Driver(string name, Car car)
+        {
+            Name = name;
+            Car = car;
+        }
+        //protected
+    }
+}
