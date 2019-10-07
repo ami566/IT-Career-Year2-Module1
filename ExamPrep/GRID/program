@@ -1,0 +1,55 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+
+namespace GRID
+{
+    class Program
+    {
+        public class StartUp
+        {
+            public static void Main(string[] args)
+            {
+                var raceTower = new RaceTower();
+                var lapsCount = int.Parse(Console.ReadLine());
+                var mapLength = int.Parse(Console.ReadLine());
+                raceTower.SetTrackInfo(lapsCount, mapLength);
+                while (true)
+                {
+                    var input = Console.ReadLine();
+                    var inputArgs = input.Split();
+                    switch (inputArgs[0])
+                    {
+                        case "RegisterDriver":
+                            raceTower.RegisterDriver(inputArgs.Skip(1).ToList());
+                            break;
+                        case "Leaderboard":
+                            Console.WriteLine(raceTower.GetLeaderboard());
+                            break;
+                        case "CompleteLaps":
+                            try
+                            {
+                                var result = raceTower.CompleteLaps(inputArgs.Skip(1).ToList());
+                                if (!string.IsNullOrEmpty(result))
+                                {
+                                    Console.WriteLine(result);
+                                    return;
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
+                            break;
+                        case "Box":
+                            raceTower.DriverBoxes(inputArgs.Skip(1).ToList());
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+
+        }
+    }
+}
