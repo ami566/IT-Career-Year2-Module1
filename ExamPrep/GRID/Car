@@ -1,0 +1,30 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+namespace GRID
+{
+    public abstract class Car
+    {
+        public int Hp { get; set; }
+        private double fuelAmount;
+        public double FuelAmount
+        {
+            get { return this.fuelAmount; }
+            set
+            {
+                this.fuelAmount = value;
+                if (FuelAmount > 160) FuelAmount = 160;
+                if (FuelAmount < 0) Console.WriteLine("The driver can't go on.");
+            }
+        }
+        public Tyre Tyre { get;  set; }
+        public Car(int hp, double fuelAmount, Tyre tyre)
+        {
+            Hp = hp;
+            FuelAmount = fuelAmount;
+            Tyre = tyre;
+        }
+    }
+}
