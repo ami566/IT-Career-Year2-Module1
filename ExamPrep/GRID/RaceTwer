@@ -1,0 +1,155 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+namespace GRID
+{
+    public class RaceTower
+    {
+        private List<Driver> drivers = new List<Driver>();
+        private Dictionary<Driver, string> Fdrivers = new Dictionary<Driver, string>();
+        private int lapsNumber, trackLength, currentLap;
+        public void SetTrackInfo(int lapsNumber, int trackLength)
+        {
+            this.lapsNumber = lapsNumber;
+            this.trackLength = trackLength;
+        }
+        public void RegisterDriver(List<string> commandArgs)
+        {
+            Driver d;
+            if (commandArgs.First() == "Aggressive")
+            {
+                if (commandArgs.ElementAt(4) == "Ultrasoft")
+                {
+                    //Tyre t = UltrasoftTyre(double.Parse(commandArgs.ElementAt(5)));
+                    d = new AggressiveDriver(commandArgs.ElementAt(1), int.Parse(commandArgs.ElementAt(2)), double.Parse(commandArgs.ElementAt(3)), 
+                        commandArgs.ElementAt(4), double.Parse(commandArgs.ElementAt(5)), double.Parse(commandArgs.ElementAt(6)));
+                    drivers.Add(d);
+                }
+                else if (commandArgs.ElementAt(4) == "Hard")
+                {
+                    d = new AggressiveDriver(commandArgs.ElementAt(1), int.Parse(commandArgs.ElementAt(2)), double.Parse(commandArgs.ElementAt(3)), 
+                        commandArgs.ElementAt(4), double.Parse(commandArgs.ElementAt(5)));
+                    drivers.Add(d);
+                }
+            }
+            else if (commandArgs.First() == "Endurance")
+            {
+                if (commandArgs.ElementAt(4) == "Ultrasoft")
+                {
+                    d = new EnduranceDriver(commandArgs.ElementAt(1), int.Parse(commandArgs.ElementAt(2)), double.Parse(commandArgs.ElementAt(3)), 
+                        commandArgs.ElementAt(4), double.Parse(commandArgs.ElementAt(5)), double.Parse(commandArgs.ElementAt(6)));
+                    drivers.Add(d);
+                }
+                else if (commandArgs.ElementAt(4) == "Hard")
+                {
+                    d = new EnduranceDriver(commandArgs.ElementAt(1), int.Parse(commandArgs.ElementAt(2)), double.Parse(commandArgs.ElementAt(3)), 
+                        commandArgs.ElementAt(4), double.Parse(commandArgs.ElementAt(5)));
+                    drivers.Add(d);
+                }
+            }
+        }
+        public void DriverBoxes(List<string> commandArgs)
+        {
+            if (commandArgs.First() == "ChangeTyres")
+            {
+                if (commandArgs.ElementAt(2) == "Hard")
+                {
+                    drivers.Find(x => x.Name == commandArgs.ElementAt(1)).Car.Tyre = new HardTyre(double.Parse(commandArgs.ElementAt(3)));
+                }
+                else
+                {
+                    drivers.Find(x => x.Name == commandArgs.ElementAt(1)).Car.Tyre = new UltrasoftTyre(double.Parse(commandArgs.ElementAt(3)), 
+                        double.Parse(commandArgs.ElementAt(4)));
+                }
+            }
+            else if (commandArgs.First() == "Refuel")
+            {
+                if (drivers.Find(x => x.Name == commandArgs.ElementAt(1)).Car.FuelAmount + double.Parse(commandArgs.ElementAt(2)) > 160)
+                {
+                    drivers.Find(x => x.Name == commandArgs.ElementAt(1)).Car.FuelAmount = 160;
+                }
+                else
+                {
+                    drivers.Find(x => x.Name == commandArgs.ElementAt(1)).Car.FuelAmount += double.Parse(commandArgs.ElementAt(2));
+                }
+            }
+            drivers.Find(x => x.Name == commandArgs.ElementAt(1)).TotalTime += 20;
+            drivers.Find(x => x.Name == commandArgs.ElementAt(1)).changeSpeed();
+        }
+        public string CompleteLaps(List<string> commandArgs)
+        {
+            if (int.Parse(commandArgs.First()) <= 0 || int.Parse(commandArgs.First()) > lapsNumber) return $"There is no time! On lap {currentLap}.";
+            else
+            {
+                for (int i = 0; i < int.Parse(commandArgs.First()); i++)
+                {
+                    foreach (var driver in drivers)
+                    {
+                        driver.TotalTime += 60 / (trackLength / driver.Speed);
+                        driver.Car.FuelAmount -= trackLength * driver.FuelConsumptionPerKm;
+                        driver.Car.Tyre.Degradate();
+                        if (driver.Car.FuelAmount < 0)
+                        {
+                            Fdrivers.Add(driver, "Out of fuel");
+                        }
+                        else if (driver.Car.Tyre.Degradation < 30)
+                        {
+                            if (driver.Car.Tyre.Name == "Ultrasoft")
+                            {
+                                Fdrivers.Add(driver, "Blown Tyre");
+                            }
+                            else if (driver.Car.Tyre.Name == "Hard" && driver.Car.Tyre.Degradation < 0)
+                            {
+                                Fdrivers.Add(driver, "Blown Tyre");
+                            }
+                        }
+                        else
+                        {
+                            driver.changeSpeed();
+                        }
+                    }
+                    foreach (var driver in Fdrivers.Keys)
+                    {
+                        if (drivers.Contains(driver))
+                        {
+                            drivers.Remove(driver);
+                        }
+                    }
+                    currentLap++;
+                    if (currentLap == lapsNumber)
+                    {
+                        endRace();
+                        break;
+                    }
+                }
+                return "";
+            }
+        }
+        public string GetLeaderboard()
+        {
+            drivers = drivers.OrderBy(x => x.TotalTime).ToList();
+            string s = "";
+            int index = 0;
+            s += $"Lap {currentLap}/{lapsNumber}";
+            foreach (var driver in drivers)
+            {
+                if (!Fdrivers.ContainsKey(driver))
+                {
+                    s += Environment.NewLine + $"{++index} {driver.Name} {driver.TotalTime:F3}";
+                }
+            }
+            foreach (var driver in Fdrivers.Keys)
+            {
+                s += Environment.NewLine + $"{++index} {driver.Name} {Fdrivers[driver]}";
+            }
+            return s;
+        }
+        public void endRace()
+        {
+            drivers = drivers.OrderByDescending(x => x.TotalTime).ToList();
+            Console.WriteLine("{0} wins the race for {1:F3} seconds.", drivers.Last().Name, drivers.Last().TotalTime);
+        }
+    }
+}
