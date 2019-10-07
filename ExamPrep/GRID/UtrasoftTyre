@@ -1,0 +1,29 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+namespace GRID
+{
+    class UltrasoftTyre : Tyre
+    {
+        public double Grip { get; set; }
+        private double degradation;
+        new public double Degradation
+        {
+            get { return this.degradation; }
+            set
+            {
+                this.degradation = value;
+                if (this.degradation < 30) throw new Exception("A tyre exploded.");
+            }
+        }
+        public UltrasoftTyre(double hardness, double grip) : base("Ultrasoft", hardness) { }
+        /*{
+        Name = "Ultrasoft";
+        Hardness = hardness;
+        Degradation = 100;
+        Grip = grip;
+        }*/
+    }
+} 
