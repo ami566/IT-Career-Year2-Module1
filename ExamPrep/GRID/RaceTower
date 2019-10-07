@@ -152,4 +152,4 @@ namespace GRID
             Console.WriteLine("{0} wins the race for {1:F3} seconds.", drivers.Last().Name, drivers.Last().TotalTime);
         }
     }
-}
+} //problem pri obrazuvaneto na razlichnite shofiori zaradi nedobaveni "new tyre, new car" i pr.
