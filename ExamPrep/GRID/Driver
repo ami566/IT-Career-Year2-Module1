@@ -1,8 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 namespace GRID
 {
     public abstract class Driver
@@ -11,20 +8,19 @@ namespace GRID
         public double TotalTime { get; set; }
         public Car Car { get; set; }
         public double FuelConsumptionPerKm { get; set; }
-        private double speed;
-        public double Speed
+
+        public string FailureReason { get; set; }
+        public int FailureIndex { get; set; }
+        
+        public virtual double Speed
         {
-            get { return this.speed; }
-            set
-            {
-                this.speed = (Car.Hp + Car.Tyre.Degradation) / Car.FuelAmount;
-            }
+            get { return (Car.Hp + Car.Tyre.Degradation) / Car.FuelAmount; }
         }
-        protected Driver(string name, Car car)
+        public Driver(string name, double fuelConsumptionPerKm)
         {
             Name = name;
-            Car = car;
+            FuelConsumptionPerKm= fuelConsumptionPerKm;
         }
-        //protected
+        
     }
 }
