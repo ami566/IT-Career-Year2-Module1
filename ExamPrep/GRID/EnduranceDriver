@@ -7,10 +7,9 @@ namespace GRID
 {
     public class EnduranceDriver : Driver
     {
-        public EnduranceDriver(string name, Car car) : base(name, car)
+        public EnduranceDriver(string name) : base(name, 1.5)
         {
-            
-            FuelConsumptionPerKm = 1.5;
+          
         }
     }
 }
