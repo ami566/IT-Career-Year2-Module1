@@ -8,17 +8,24 @@ namespace GRID
     public abstract class Car
     {
         public int Hp { get; set; }
-        private double fuelAmount;
+        private double fuelAmount = 0;
         public double FuelAmount
         {
             get { return this.fuelAmount; }
             set
             {
+                if (value > 160)
+                {
+                    FuelAmount = 160;
+                }
+                else if (value < 0)
+                {
+                    throw new Exception("Out of fuel.");
+                }
                 this.fuelAmount = value;
-                if (FuelAmount > 160) FuelAmount = 160;
-                if (FuelAmount < 0) Console.WriteLine("The driver can't go on.");
             }
         }
+
         public Tyre Tyre { get;  set; }
         public Car(int hp, double fuelAmount, Tyre tyre)
         {
