@@ -5,18 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 namespace GRID
 {
-    public abstract class Tyre
+    public class Tyre
     {
         public string Name { get; set; }
         public double Hardness { get; set; }
-        private double degradation;
-        public double Degradation
+        public double degradation = 100;
+        public virtual double Degradation
         {
-            get { return this.degradation; }
+            get { return Degradation; }
             set
             {
                 this.degradation = value;
-                if (this.degradation < 0) throw new Exception("A tyre exploded.");
+                if (value < 0) throw new Exception("Blown tyre.");
             }
         }
         protected Tyre(string name, double hardness)
@@ -24,6 +24,7 @@ namespace GRID
             Name = name;
             Hardness = hardness;
         }
-        //protected
+        public virtual void Degrade()
+            { Degradation = Hardness; }
     }
 } 
