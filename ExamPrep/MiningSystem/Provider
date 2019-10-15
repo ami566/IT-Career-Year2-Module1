@@ -1,0 +1,43 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace MiningSystem
+{
+    class Provider
+    {
+        private string id;
+        private double energyOutput;
+
+        public Provider( string id, double energyOutput)
+        {
+            Id = id;
+            EnergyOutput = energyOutput;
+        }
+
+        public string Id { get => id; set => id = value; }
+        public double EnergyOutput
+        {
+            get => energyOutput;
+            set
+            {
+                if (value < 0)
+                {
+                    throw new ArgumentException("EnergyOutput must be positive.");
+                }
+                else if (value > 10000)
+                {
+                    throw new ArgumentException("Provider is not registreted, because of its EnergyOutput.");
+                }
+            }
+        }
+
+        public override string ToString()
+        {
+            string result = $"{this.GetType().Name}Provider - {id}" + Environment.NewLine;
+
+            return result;
+        }
+
+    }
+}
