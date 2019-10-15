@@ -8,22 +8,25 @@ namespace GRID
     class UltrasoftTyre : Tyre
     {
         public double Grip { get; set; }
-        private double degradation;
-        new public double Degradation
+        public UltrasoftTyre(double hardness, double grip) : base("Ultrasoft", hardness)
         {
-            get { return this.degradation; }
+            Grip = grip;
+        }
+
+        public override double Degradation
+        {
+            get { return degradation; }
             set
             {
+                if (this.degradation <= 30)
+                { throw new Exception("Blown tyre."); }
                 this.degradation = value;
-                if (this.degradation < 30) throw new Exception("A tyre exploded.");
             }
         }
-        public UltrasoftTyre(double hardness, double grip) : base("Ultrasoft", hardness) { }
-        /*{
-        Name = "Ultrasoft";
-        Hardness = hardness;
-        Degradation = 100;
-        Grip = grip;
-        }*/
+
+        public override void Degrade()
+        {
+            Degradation = (Hardness + Grip);
+        }
     }
 } 
