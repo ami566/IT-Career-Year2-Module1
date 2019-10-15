@@ -1,0 +1,241 @@
+Mining System
+Преглед на задачата
+Системата се състои от миньори и източници на енергия. Миньорите събират въглища, но имат нужда от много енергия, за да направят това. 
+Тук се появяват източниците на енергия. Източниците на енергия предоставят енергия, която миньорите използват, за да събират въглища.
+
+Скелет
+В скелета ви е предоставена обработката на входа и празни методи в SystemManager класа. Допишете липсващата логика в класовете и в 
+контролера, за да може приложението да работи по коректен начин.
+
+Task 1: Структура
+Структурата се състои от миньори и източници на енергия.
+Miners
+Miner
+
+Всеки миньор има следните полета:
+•	id – низ 
+•	coalOutput – реално число 
+•	energyRequirement – реално число 
+
+За всеки миньор трябва да валидирате, че изходното количество въглища и необходимата енергия не е негативна. Също така трябва да 
+валидирате, че необходимата енергия е не повече от 20000. Има два вида миньори:
+
+Hewer
+Има допълнително поле:
+•	enduranceFactor – цяло число. 
+ПРИ ИНИЦИАЛИЗИРАНЕ разделете дадената необходима енергия на фактора за издръжливост.
+
+Driller
+ПРИ ИНИЦИАЛИЗИРАНЕ увеличете изходното количество въглища с 200% и необходимата енергия със 100%.
+
+Providers
+Provider
+Всеки източник на енергия има следните полета:
+•	id – низ 
+•	energyOutput – реално число 
+Изходната енергия трябва да бъде позитивно число, по-малко от 10000.
+
+SunProvider
+При инициализация увеличете изходната енергия с 25%.
+
+ElectricityProvider
+При инициализация увеличете изходната енергия с 50%.
+
+Task 2: Бизнес логика
+Клас Контролер
+Бизнес логиката на програмата трябва да бъде концентрирана около няколко команди. Имплементирайте клас, наречен SystemManager, 
+който ще притежава основната функционалност, представена от тези публични методи:
+
+SystemManager.cs
+public string RegisterHarvester(List<string> arguments)
+{
+    //TODO: Add some logic here …
+}
+public string RegisterProvider(List<string> arguments)
+{
+    //TODO: Add some logic here …
+}
+public string Day()
+{
+    //TODO: Add some logic here …
+}
+public string Check(List<string> arguments)
+{
+    //TODO: Add some logic here …
+}
+public string ShutDown()
+{
+    //TODO: Add some logic here …
+}
+ЗАБЕЛЕЖКА: Методите се извикват отвън, така че тези методи НЕ трябва да приемат командния параметър като част от аргументите
+
+Функционалност
+Миньорите и източниците на енергия имат уникални идентификационни номера.
+Когато отмине ден, източниците на енергия произвеждат енергия, а миньорите консумират енергия и събират въглища. В програмата един 
+ден отминава при получена съответстваща команда.
+Източниците на енергия произвеждат енергия, която се съхранява в системата. Когато има достатъчно енергия за захранване на всички 
+миньори, миньорите я консумират и връщат добитите въглищата. Системата пази totalStoredEnergy и totalMinedCoal.
+
+Команди
+Има няколко команди, които контролират бизнес логиката на приложението, което трябва да изградите. Те са посочени по-долу.
+
+RegisterMiner
+Създава се миньор и го регистрира в системата.
+Парамертри
+•	type – низ, равен на Driller или Hewer. 
+•	id – низ 
+•	coalOutput – позитивно реално число 
+•	energyRequirement – позитивно реално число 
+Ако типът е Hewer, ще получите един допълнителен параметър:
+•	enduranceFactor – позитивно цяло число. 
+
+RegisterProvider
+Създава се източник на енергия и го регистрира в системата.
+Параметри
+•	type – низ, който е равен на Sun или Electricity 
+•	id – низ 
+•	energyOutput – позитивно реално число 
+
+Day
+Когато получите тази команда, един ден минава. Това е моментът, в който започва истинската работа. Трябва да изчислите цялата
+произведена енергия от източниците на енергия и да я съхраните в системата. След това трябва да проверите дали има достатъчно енергия 
+в системата, за да започнат миньорите да копаят. Ако сумата от енергийните нужди на всички миньори е по-голяма от съхраняваната енергия,
+тогава нищо НЕ се случва. Ако има достатъчно енергия, ВСИЧКИ миньори започват да копаят и консумират от съхранената енергия.
+
+Check
+Системата трябва да провери дали има елемент с дадения идентификатор между доставчиците на енергия или миньорите, връщайки 
+стринговата репрезентация на обекта. Идентификационните номера са уникални, така че трябва да има само едно с този номер.
+Параметри
+•	id – низ 
+
+Shutdown
+Спира програмата и отпечатва останалата съхранена енергия и събраното количество въглища.
+
+Task 3: Вход / Изход
+Вход
+По-долу можете да видите формата, в който всяка команда ще бъде дадена на входа:
+•	RegisterMiner Driller {id} {coalOutput} {energyRequirement} 
+•	RegisterMiner Hewer {id} {coalOutput} {energyRequirement} {enduranceFactor} 
+•	RegisterProvider {type} {id} {energyOutput} 
+•	Day 
+•	Check {id} 
+•	Shutdown 
+Изход
+По-долу можете да видите кой изход трябва да бъде предоставен от командите.
+RegisterHarvester
+При успешно изпълнена команда трябва да отпечата "Successfully registered {type} Miner – {id}". В противен случай отпечатайте: 
+"Miner is not registered, because of it's {propertyName}"
+RegisterProvider
+При успешно изпълнена команда трябва да отпечата "Successfully registered {type} Provider – {id}”. В противен случай отпечатайте: 
+"Provider is not registered, because of it's {propertyName}"
+Day
+Трябва да изведете следното съобщение:
+“A day has passed.
+“Energy Provided: {summedEnergyOutput}”.
+“Mined Coal: {summedCoalOutput}”.
+summedEnergyOutput и summedCoalutput са количествата, които са били произведени за деня.
+Check
+Трябва да върне стринговата репрезентация на елемента с дадения идентификационен номер. Ако няма такъв елемент, командата трябва да 
+върне следното съобщение: “No element found with id – {id}”.
+Тъй като елементът може да бъде доставчик на енергия или миньор, двата изходни формати са предоставени по-долу:
+Miner	Provider
+“{type} Miner - {id}
+  Coal Output: {coalOutput}
+  Energy Requirement: {energyRequired}”	“{type} Provider - {id}
+  Energy Output: {energyOutput}”
+Shutdown
+Трябва да изведете следното съобщение:
+ “System Shutdown
+ Total Energy Stored: {totalEnergyStored}
+ Total Mined Coal: {totalMinedCoal}”.
+totalEnergyStored and totalMinedCoal са общите стойности, които са събрани по време на изпълнението на програмата.
+Ограничения
+•	Идентификационния номер ще бъде низ, който може да съдържа всеки символ от ASCII таблицата без празно пространство (' '). 
+•	Идентификационните номера ще бъдат уникални. 
+•	Реалните числа ще бъдат в диапазона [-1.000.000, 1.000.000]. 
+•	enduranceFactor ще бъде цяло число в диапазона [1, 10]. 
+Примери
+Input	Output
+RegisterMiner Hewer AS-51 100 100 10
+RegisterMiner Driller CDD 100 50
+RegisterProvider Sun Falcon 100
+Day
+Check AS-51
+Check CDD
+Check Falcon
+Day
+Shutdown
+ 	Successfully registered Hewer Miner - AS-51
+Successfully registered Driller Miner - CDD
+Successfully registered Sun Provider - Falcon
+A day has passed.
+Energy Provided: 125
+Mined Coal: 400
+Hewer Miner - AS-51
+Coal Output: 100
+Energy Requirement: 10
+Driller Miner - CDD
+Coal Output: 300
+Energy Requirement: 100
+Sun Provider - Falcon
+Energy Output: 125
+A day has passed.
+Energy Provided: 125
+Mined Coal: 400
+System Shutdown
+Total Energy Stored: 30
+Total Mined Coal: 800
+RegisterMiner Hewer AS-51 100 1000000 10
+RegisterMiner Driller CDD 100 50
+RegisterProvider Sun Falcon 100
+RegisterProvider Sun Pesho 100000
+Day
+Check CDD
+Check Falcon
+Day
+Shutdown	Miner is not registered, because of it's EnergyRequirement
+Successfully registered Driller Miner - CDD
+Successfully registered Sun Provider - Falcon
+Provider is not registered, because of it's EnergyOutput
+A day has passed.
+Energy Provided: 125
+Mined Coal: 300
+Driller Miner - CDD
+Coal Output: 300
+Energy Requirement: 100
+Sun Provider - Falcon
+Energy Output: 125
+A day has passed.
+Energy Provided: 125
+Mined Coal: 300
+System Shutdown
+Total Energy Stored: 50
+Total Mined Coal: 600
+RegisterProvider Electricity Deep-1 1000
+RegisterProvider Electricity Deep-3 2000
+Day
+RegisterMiner Driller S-1 10000 11250
+Day
+Check Something
+Check S-1
+Day
+Shutdown
+ 	Successfully registered Electricity Provider - Deep-1
+Successfully registered Electricity Provider - Deep-3
+A day has passed.
+Energy Provided: 4500
+Mined Coal: 0
+Miner is not registered, because of it's EnergyRequirement
+A day has passed.
+Energy Provided: 4500
+Mined Coal: 0
+No element found with id - Something
+No element found with id - S-1
+A day has passed.
+Energy Provided: 4500
+Mined Coal: 0
+System Shutdown
+Total Energy Stored: 13500
+Total Mined Coal: 0
+ 
+
