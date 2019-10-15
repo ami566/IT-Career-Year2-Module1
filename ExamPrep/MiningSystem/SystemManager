@@ -1,0 +1,82 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace MiningSystem
+{
+    class SystemManager
+    {
+        List<Miner> miners = new List<Miner>();
+        List<Provider> providers = new List<Provider>();
+        public string RegisterMiner(List<string> arguments)
+        {
+            string type = arguments[0];
+            string id = arguments[1];
+            double coalOutput = double.Parse(arguments[2]);
+            double energyRequirement = double.Parse(arguments[3]);
+
+            try
+            {
+            switch (type)
+            {
+                case "Hewer":
+                    int enduranceFactor = int.Parse(arguments[4]);
+                    Hewer hewer = new Hewer(id, coalOutput, energyRequirement, enduranceFactor);
+                    miners.Add(hewer);
+                    break;
+                case "Driller":
+                    Driller driller = new Driller(id, coalOutput, energyRequirement);
+                    miners.Add(driller);
+                    break;
+                default:
+                    break;
+                 
+
+            }
+            }
+             catch (Exception e)
+            {
+                return e.Message;
+            }
+        }
+
+        public string RegisterProvider(List<string> arguments)
+        {
+            string type = arguments[0];
+            string id = arguments[1];
+            double energyOutput = double.Parse(arguments[2]);
+
+            try
+            {
+                switch (arguments[0])
+                {
+                    case "Sun":
+                        SunProvider sProvider = new SunProvider(id, energyOutput);
+                        break;
+                    case "Electricity":
+                        ElectricityProvider eProvider = new ElectricityProvider(id, energyOutput);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception e)
+            {
+                return e.Message;
+            }
+        }
+        public string Day()
+        {
+            //TODO: Add some logic here …
+        }
+        public string Check(List<string> arguments)
+        {
+            //TODO: Add some logic here …
+        }
+        public string ShutDown()
+        {
+            //TODO: Add some logic here …
+        }
+
+    }
+}
