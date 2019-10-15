@@ -1,0 +1,44 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace MiningSystem
+{
+    class Miner
+    {
+        private string id;
+        private double coalOutput;
+        double energyRequirement;
+
+        public Miner(string id, double coalOutput, double energyRequirement)
+        {
+            Id = id;
+            CoalOutput = coalOutput;
+            EnergyRequirement = energyRequirement;
+        }
+
+        public string Id { get => id; set => id = value; }
+        public double CoalOutput
+        {
+            get { return this.coalOutput; }
+            set { this.coalOutput = value; }
+
+        }
+
+        public double EnergyRequirement
+        {
+            get => energyRequirement;
+            set
+            {
+                if (value<0)
+                {
+                    throw new ArgumentException("Energy.Requrement can not be negative.");
+                }
+                else if(value>20000)
+                {
+                    throw new ArgumentException("Energy.Requrement can not be over 20000.");
+                }
+            }
+        }
+    }
+}
