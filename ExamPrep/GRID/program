@@ -10,31 +10,28 @@ namespace GRID
         {
             public static void Main(string[] args)
             {
-                var raceTower = new RaceTower();
-                var lapsCount = int.Parse(Console.ReadLine());
-                var mapLength = int.Parse(Console.ReadLine());
-                raceTower.SetTrackInfo(lapsCount, mapLength);
-                while (true)
+                
+                int lapsCount = int.Parse(Console.ReadLine());
+                int trackLength = int.Parse(Console.ReadLine());
+                RaceTower rT = new RaceTower();
+                rT.SetTrackInfo(lapsCount, trackLength);
+                do
                 {
-                    var input = Console.ReadLine();
-                    var inputArgs = input.Split();
-                    switch (inputArgs[0])
+                    List<string> commandData = Console.ReadLine().Split().ToList();
+                    switch (commandData[0])
                     {
                         case "RegisterDriver":
-                            raceTower.RegisterDriver(inputArgs.Skip(1).ToList());
+                            commandData.RemoveAt(0);
+                            rT.RegisterDriver(commandData);
                             break;
                         case "Leaderboard":
-                            Console.WriteLine(raceTower.GetLeaderboard());
+                            Console.WriteLine(rT.GetLeaderboard());
                             break;
                         case "CompleteLaps":
                             try
                             {
-                                var result = raceTower.CompleteLaps(inputArgs.Skip(1).ToList());
-                                if (!string.IsNullOrEmpty(result))
-                                {
-                                    Console.WriteLine(result);
-                                    return;
-                                }
+                                commandData.RemoveAt(0);
+                                rT.CompleteLaps(commandData);
                             }
                             catch (Exception ex)
                             {
@@ -42,12 +39,14 @@ namespace GRID
                             }
                             break;
                         case "Box":
-                            raceTower.DriverBoxes(inputArgs.Skip(1).ToList());
+                            commandData.RemoveAt(0);
+                            rT.DriverBoxes(commandData);
                             break;
                         default:
                             break;
                     }
-                }
+                } while (rT.LapNumber > 0);
+                Console.WriteLine(rT.Finish());
             }
 
         }
