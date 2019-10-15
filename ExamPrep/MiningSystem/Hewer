@@ -1,0 +1,13 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace MiningSystem
+{
+    class Hewer : Miner
+    {
+        public int EnduranceFctor { set; get; }
+        public Hewer(string id, double coalOutput, double energyRequirement, int enduranceOutput) : base(id, coalOutput, energyRequirement)
+        { }
+    }
+}
